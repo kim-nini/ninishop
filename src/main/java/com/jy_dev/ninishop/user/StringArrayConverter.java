@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//JPA에서 List<String> 타입을 데이터베이스의 단일 String 컬럼으로 변환하기 위한 커스텀 컨버터
 @Converter // JPA 엔티티의 속성과 데이터베이스 컬럼 간의 변환을 수행하는 컨버터
 public class StringArrayConverter implements AttributeConverter<List<String>, String> {
 
