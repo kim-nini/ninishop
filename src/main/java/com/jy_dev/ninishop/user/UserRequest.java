@@ -33,10 +33,11 @@ public class UserRequest {
     @NotBlank
     private String phoneNumber;
 
-    public User toUserEntity(String password, String username, String email, String address, String phoneNumber){
+    public User toUserEntity(String password, String username, String email, String address, String phoneNumber,  List<String> roles){
         return User.builder()
                 .username(username)
                 .email(email)
+                .roles(roles)
                 .address(address)
                 .phoneNumber(phoneNumber)
                 .password(password)

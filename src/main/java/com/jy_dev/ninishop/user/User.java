@@ -28,14 +28,24 @@ public class User {
     @Column(length = 100,  nullable = false)
     private String phoneNumber;
 
+    @Column(length = 30)
+    @Convert(converter = StringArrayConverter.class)
+    private List<String> roles = new ArrayList<>(); // role은 한 개 이상
 
     @Builder
-    public User(int id, String email, String password, String username, String address, String phoneNumber) {
+    public User(int id, String email, String password, String username, String address, String phoneNumber, List<String> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.roles = roles;
+    }
+
+    public void updateInfo(String password, String username, List<String> roles){
+        this.password = password;
+        this.username = username;
+        this.roles = roles;
     }
 }

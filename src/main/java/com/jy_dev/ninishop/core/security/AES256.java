@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class AES256 {
     @Value("${secret.AES256}")
     private String privateKey_256;
-//    @Autowired
+
     private SecretKeySpec secretKey;
 
 

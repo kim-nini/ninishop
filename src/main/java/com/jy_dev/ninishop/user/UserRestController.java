@@ -1,14 +1,10 @@
 package com.jy_dev.ninishop.user;
 
-import com.jy_dev.ninishop.core.errors.Exception400;
-import com.jy_dev.ninishop.core.errors.Exception500;
 import com.jy_dev.ninishop.core.utils.ApiUtils;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +22,22 @@ public class UserRestController {
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(user);
         return ResponseEntity.ok(apiResult);
     }
+
+    // (기능1-1) 이메일인증
+//    @PostMapping("/emails/verification-requests")
+//    public ResponseEntity sendMessage(@RequestParam("email") @Valid @CustomEmail String email) {
+//        memberService.sendCodeToEmail(email);
+//
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/emails/verifications")
+//    public ResponseEntity verificationEmail(@RequestParam("email") @Valid @CustomEmail String email,
+//                                            @RequestParam("code") String authCode) {
+//        EmailVerificationResult response = memberService.verifiedCode(email, authCode);
+//
+//        return new ResponseEntity<>(new SingleResponseDto<>(response), HttpStatus.OK);
+//    }
 
     // (기능2) 로그인
      @PostMapping("/login")
