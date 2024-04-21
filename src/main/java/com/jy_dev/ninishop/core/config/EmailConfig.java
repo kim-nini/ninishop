@@ -26,6 +26,12 @@ public class EmailConfig {
     @Value("${spring.mail.properties.mail.smtp.auth}")
     private boolean auth;
 
+    @Value("${spring.mail.properties.mail.transport.protocol}")
+    private String protocol;
+
+    @Value("${spring.mail.properties.mail.smtp.socketFactory.class}")
+    private String className;
+
     @Value("${spring.mail.properties.mail.smtp.starttls.enable}")
     private boolean starttlsEnable;
 
@@ -54,10 +60,20 @@ public class EmailConfig {
         return mailSender;
     }
 
-    private Properties getMailProperties() { // yml로 바꺼야하나
+
+    private Properties getMailProperties() { // 프로퍼티스 객체 생성
         Properties properties = new Properties();
+        properties.put("mail.transport.protocol", protocol);
         properties.put("mail.smtp.auth", auth);
+        properties.put("mail.smtp.socketFactory.class", className);
         properties.put("mail.smtp.starttls.enable", starttlsEnable);
+
+        properties.put("mail.debug", "true");//디버깅 정보 출력
+        properties.put("mail.smtp.ssl.trust", "smtp.google.com");//smtp 서버의 ssl 인증서를 신뢰
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");//사용할 ssl 프로토콜 버젼
+
+
+
         properties.put("mail.smtp.starttls.required", starttlsRequired);
         properties.put("mail.smtp.connectiontimeout", connectionTimeout);
         properties.put("mail.smtp.timeout", timeout);

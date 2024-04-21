@@ -20,7 +20,7 @@ public class JwtTokenProvider {
     public static final String HEADER = "Authorization";
     private static final String SECRET = "MySecretKey";
 
-    public static String create(User user) {
+    public static String createAccessToken(User user) {
         StringArrayConverter sac = new StringArrayConverter();
         String roles = sac.convertToDatabaseColumn(user.getRoles());
         String jwt = JWT.create()
@@ -29,6 +29,15 @@ public class JwtTokenProvider {
                 .withClaim("id", user.getId())
                 .withClaim("role", roles)
                 .sign(Algorithm.HMAC512(SECRET));
+
+        return TOKEN_PREFIX + jwt;
+    }
+
+    public static String createRefreshToken() { // 엑세스를 발급하기 위한 토큰...?
+        String jwt = JWT.create()
+                .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
+                .sign(Algorithm.HMAC512(SECRET));
+
         return TOKEN_PREFIX + jwt;
     }
 

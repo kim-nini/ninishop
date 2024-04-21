@@ -40,6 +40,7 @@ dependencies {
     implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'  // Auth0의 Java JWT 라이브러리
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0' // Apache Commons Lang
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '3.0.5' // 메일인증
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis' // redis
 }
 
 tasks.named('test') {

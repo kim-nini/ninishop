@@ -43,9 +43,9 @@ public class User {
         this.roles = roles;
     }
 
-    public void updateInfo(String password, String username, List<String> roles){
+    public void updateInfo(String password, String address, String phoneNumber){
         this.password = password;
-        this.username = username;
-        this.roles = roles;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
     }
 }

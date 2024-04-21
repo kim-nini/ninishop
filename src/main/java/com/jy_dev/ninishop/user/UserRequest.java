@@ -1,9 +1,7 @@
 package com.jy_dev.ninishop.user;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +31,9 @@ public class UserRequest {
     @NotBlank
     private String phoneNumber;
 
+//    @NotBlank
+//    private String authNum;
+
     public User toUserEntity(String password, String username, String email, String address, String phoneNumber,  List<String> roles){
         return User.builder()
                 .username(username)
@@ -51,4 +52,11 @@ public class UserRequest {
         this.phoneNumber = phoneNumber;
         this.address =address;
     }
+
+    @Getter
+    public static class EmailCheck {
+        private String email;
+        private String authNum;
+    }
+
 }
