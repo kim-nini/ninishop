@@ -23,6 +23,7 @@ import java.util.List;
 @Slf4j
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
+    // 이 클래스가 헤더값 토큰정보 확인하고 검증하는 곳
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
@@ -31,6 +32,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String prefixJwt = request.getHeader(JwtTokenProvider.HEADER);
 
+        // 헤더값검증
         if (prefixJwt == null) {
             chain.doFilter(request, response);
             return;

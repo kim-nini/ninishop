@@ -1,4 +1,4 @@
-package com.jy_dev.ninishop.core.errors;
+package com.jy_dev.ninishop.core.errors.exception;
 
 
 import com.jy_dev.ninishop.core.utils.ApiUtils;

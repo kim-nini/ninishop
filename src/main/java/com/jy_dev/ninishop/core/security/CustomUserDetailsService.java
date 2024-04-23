@@ -1,6 +1,6 @@
 package com.jy_dev.ninishop.core.security;
 
-import com.jy_dev.ninishop.core.errors.Exception401;
+import com.jy_dev.ninishop.core.errors.exception.Exception401;
 import com.jy_dev.ninishop.user.User;
 import com.jy_dev.ninishop.user.UserJPARepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userJPARepository.findByEmail(username).orElseThrow(
                 () -> new Exception401("인증되지 않았습니다")
         );
-        return new CustomUserDetails(user);
+        return new CustomUserDetails(user); // 인증된 객체를 반환함
     }
 }

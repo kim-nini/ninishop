@@ -1,4 +1,4 @@
-package com.jy_dev.ninishop.core.errors;
+package com.jy_dev.ninishop.core.errors.exception;
 
 import com.jy_dev.ninishop.core.utils.ApiUtils;
 import lombok.Getter;
@@ -7,16 +7,16 @@ import org.springframework.http.HttpStatus;
 
 // 권한 없음
 @Getter
-public class Exception404 extends RuntimeException {
-    public Exception404(String message) {
+public class Exception403 extends RuntimeException {
+    public Exception403(String message) {
         super(message);
     }
 
     public ApiUtils.ApiResult<?> body(){
-        return ApiUtils.error(getMessage(), HttpStatus.NOT_FOUND);
+        return ApiUtils.error(getMessage(), HttpStatus.FORBIDDEN);
     }
 
     public HttpStatus status(){
-        return HttpStatus.NOT_FOUND;
+        return HttpStatus.FORBIDDEN;
     }
 }

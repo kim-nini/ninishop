@@ -1,9 +1,8 @@
 package com.jy_dev.ninishop.user;
 
 
-import com.jy_dev.ninishop.core.errors.Exception400;
-import com.jy_dev.ninishop.core.errors.Exception401;
-import com.jy_dev.ninishop.core.errors.Exception500;
+import com.jy_dev.ninishop.core.errors.exception.Exception401;
+import com.jy_dev.ninishop.core.errors.exception.Exception500;
 import com.jy_dev.ninishop.core.security.AES256;
 import com.jy_dev.ninishop.core.security.JwtTokenProvider;
 import com.jy_dev.ninishop.redis.RedisService;
@@ -66,12 +65,9 @@ public class UserService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new Exception401("wrong email or password");
         }
-
-
 //        String token = JwtTokenProvider.createAccessToken(user);
-//        JwtTokenProvider.createRefreshToken();
-
 //        return token;
+          String jwt = JwtTokenProvider.createRefreshToken();
         return new Token(JwtTokenProvider.createAccessToken(user),JwtTokenProvider.createRefreshToken());
     }
 
