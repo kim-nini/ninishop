@@ -1,7 +1,7 @@
 //package com.jy_dev.ninishop.core.security;
 //
-//import com.jy_dev.ninishop.core.errors.Exception401;
-//import com.jy_dev.ninishop.core.errors.Exception403;
+//import com.jy_dev.ninishop.core.errors.exception.Exception401;
+//import com.jy_dev.ninishop.core.errors.exception.Exception403;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.context.annotation.Bean;
