@@ -6,6 +6,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -24,7 +28,9 @@ public class Order {
     private User user;
 
     private int status;
-    private String orderDate;
+
+    @CreationTimestamp // LocalDateTime : 시간까지
+    private LocalDate orderDate;
 
 
 
