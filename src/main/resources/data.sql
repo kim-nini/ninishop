@@ -18,11 +18,7 @@ INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALU
 INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('4', '[뮤지컬] 베어 더 뮤지컬', '두산아트센터 연강홀', '/images/4.jpg', '66000');
 INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('5', '[뮤지컬] 디아길레프', '예스24아트원 1관', '/images/5.jpg', '50000');
 INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('6', '[뮤지컬] 매튜 본의 `로미오와 줄리엣`', 'LG아트센터 서울 LG SIGNATURE 홀', '/images/6.jpg', '30000');
--- INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('7', '[뮤지컬] 6시 퇴근', '대학로 SH아트홀', '/images/7.jpg', '26800');
--- INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('8', '[뮤지컬] 더 맨 얼라이브', '서울숲씨어터 2관', '/images/8.jpg', '25900');
--- INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('9', '[뮤지컬] 오즈', '대학로 TOM(티오엠) 2관', '/images/9.jpg', '797000');
--- INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('10', '[뮤지컬] 진짜나쁜소녀', 'JTN 아트홀 1관', '/images/10.jpg', '8900');
---
+
 INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('1', '1', 'S석', '44000');
 INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('2', '1', 'R석', '66000');
 INSERT INTO option_tb (`id`,`product_id`,`option_name`,`price`) VALUES ('3', '2', 'S석', '55000');

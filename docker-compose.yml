@@ -1,0 +1,37 @@
+version: '3'
+services:
+  backend:
+    container_name: docker-backend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8091:8090" # docker spring port 8091
+    volumes:
+      - ./:/app/
+    depends_on:
+      - redis
+      - mysql
+    links:
+      - mysql:mysql
+      - redis:redis
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/ninishop
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 1234
+      REDIS_HOST: redis
+  redis:
+    container_name: docker-redis
+    image: redis
+    ports:
+      - "6379:6379"
+  mysql:
+    container_name: docker-mysql
+    image: mysql:latest
+    ports:
+      - "3305:3306"
+    volumes:
+      - ./backup-data/data.sql:/docker-entrypoint-initdb.d/1.sql
+    environment:
+#      MYSQL_DATABASE: "ninishop"
+      MYSQL_ROOT_PASSWORD: 1234

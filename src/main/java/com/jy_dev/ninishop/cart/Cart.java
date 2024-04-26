@@ -26,11 +26,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // user별로 장바구니에 묶여 있음.
 
-//    @OneToOne(fetch = FetchType.LAZY)
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
 

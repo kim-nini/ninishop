@@ -1,0 +1,59 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+  port: 8090
+spring:
+  sql:
+    init:
+      mode: always
+  datasource:  # 데이터 소스(데이터베이스 연결 설정) 구성
+    url: jdbc:mysql://localhost:3305/ninishop # MySQL 데이터베이스의 JDBC 연결 URL
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL JDBC 드라이버 클래스명
+    username: nini  # 데이터베이스 접속을 위한 사용자 이름
+    password: 1234  # 데이터베이스 접속을 위한 비밀번호
+  jpa:
+    hibernate:
+      ddl-auto: update # JPA가 데이터베이스 스키마를 자동으로 관리하도록 설정 (업데이트 모드)
+    show-sql: true  # 실행되는 SQL 명령어를 콘솔에 표시
+    properties:
+      hibernate:
+#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect  # MySQL InnoDB 최적화를 위한 방언 설정
+        format_sql: true  # SQL을 보기 좋게 포맷하여 출력
+#      default_batch_fetch_size: 100  # 일괄 처리 시 기본적으로 가져오는 행 수
+#    open-in-view: false  # Open EntityManager in View 패턴 사용 비활성화
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: skrskr9403@gmail.com
+    password: ovddibeiwobmrvsx
+    properties:
+      mail:
+        transport:
+          protocol: smtp
+        smtp:
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+    auth-code-expiration-millis: 1800000  # 30 * 60 * 1000 == 30분
+  data:
+    redis:
+      host: localhost
+#      host: redis
+      port: 6379
+logging:
+  level:
+    '[com.jy_dev.ninishop]': DEBUG
+    '[org.hibernate.type]': TRACE
+
+secret:
+  AES256: "xak47grandfather"
+#file:
+#  path: ./images/
