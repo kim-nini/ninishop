@@ -1,7 +1,7 @@
 package com.jy_dev.ninishop.user;
 
-import com.jy_dev.ninishop.core.errors.exception.Exception400;
 import com.jy_dev.ninishop.redis.RedisService;
+import com.jy_dev.ninishop.core.errors.exception.Exception400;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;

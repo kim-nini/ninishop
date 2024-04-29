@@ -2,7 +2,6 @@ package com.jy_dev.ninishop.cart;
 
 import com.jy_dev.ninishop.option.Option;
 import com.jy_dev.ninishop.product.Product;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

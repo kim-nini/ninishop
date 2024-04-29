@@ -1,9 +1,8 @@
 package com.jy_dev.ninishop.cart;
 
+import com.jy_dev.ninishop.option.Option;
 import com.jy_dev.ninishop.core.errors.exception.Exception400;
 import com.jy_dev.ninishop.core.errors.exception.Exception404;
-import com.jy_dev.ninishop.core.errors.exception.Exception500;
-import com.jy_dev.ninishop.option.Option;
 import com.jy_dev.ninishop.option.OptionJPARepository;
 import com.jy_dev.ninishop.user.User;
 import lombok.RequiredArgsConstructor;

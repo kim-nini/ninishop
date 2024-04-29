@@ -1,9 +1,8 @@
 package com.jy_dev.ninishop.product;
 
-import com.jy_dev.ninishop.core.errors.exception.Exception401;
 import com.jy_dev.ninishop.option.Option;
 import com.jy_dev.ninishop.option.OptionJPARepository;
-import com.jy_dev.ninishop.product.ProductResponse.findAllDTO;
+import com.jy_dev.ninishop.core.errors.exception.Exception401;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +19,11 @@ public class ProductService {
 
     // 상품조회
     @Transactional(readOnly = true)
-    public List<findAllDTO> getAllProducts() {
+    public List<ProductResponse.findAllDTO> getAllProducts() {
         List<Product> products = productJPARepository.findAll();
 
         return products.stream()
-                .map(findAllDTO::new)
+                .map(ProductResponse.findAllDTO::new)
                 .toList();
     }
 

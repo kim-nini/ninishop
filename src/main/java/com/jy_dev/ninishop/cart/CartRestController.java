@@ -8,9 +8,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-
-import static com.jy_dev.ninishop.core.utils.ApiUtils.success;
 
 
 @RequestMapping("/cart")

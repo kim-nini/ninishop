@@ -3,12 +3,6 @@ package com.jy_dev.ninishop.order;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import jdk.jshell.Snippet;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Converter // JPA 엔티티의 속성과 데이터베이스 컬럼 간의 변환을 수행하는 컨버터
 public class TinyIntConverter implements AttributeConverter<StatusEnum, Integer> {

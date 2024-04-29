@@ -1,8 +1,8 @@
 package com.jy_dev.ninishop.core.security;
 
+import com.jy_dev.ninishop.user.UserJPARepository;
 import com.jy_dev.ninishop.core.errors.exception.Exception401;
 import com.jy_dev.ninishop.user.User;
-import com.jy_dev.ninishop.user.UserJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

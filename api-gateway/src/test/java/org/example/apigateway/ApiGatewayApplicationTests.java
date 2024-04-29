@@ -1,10 +1,10 @@
-package com.jy_dev.ninishop;
+package org.example.apigateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NinishopApplicationTests {
+class ApiGatewayApplicationTests {
 
     @Test
     void contextLoads() {
