@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.core.errors.exception.Exception400;
 import org.example.orderservice.core.errors.exception.Exception404;
+import org.example.productservice.option.OptionJPARepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

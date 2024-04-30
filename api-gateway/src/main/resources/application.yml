@@ -24,6 +24,7 @@ spring:
             - Path=/product-service/**
           filters:
             - RewritePath=/product-service/(?<segment>.*), /$\{segment}
+#            - GlobalAuthFilter
         - id: order-service
           uri: lb://order-service
           predicates:

@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.productservice.option.Option;
+import org.example.userservice.user.User;
 
 
 @Getter
@@ -23,11 +25,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private User user; // user별로 장바구니에 묶여 있음.
-//
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Option option;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user; // user별로 장바구니에 묶여 있음.
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Option option;
 
     @Column(nullable = false)
     private int quantity;
@@ -35,14 +37,14 @@ public class Cart {
     @Column(nullable = false)
     private int price;
 
-//    @Builder
-//    public Cart(int id, User user, Option option, int quantity, int price) {
-//        this.id = id;
-//        this.user = user;
-//        this.option = option;
-//        this.quantity = quantity;
-//        this.price = price;
-//    }
+    @Builder
+    public Cart(int id, User user, Option option, int quantity, int price) {
+        this.id = id;
+        this.user = user;
+        this.option = option;
+        this.quantity = quantity;
+        this.price = price;
+    }
 
     // 장바구니 업데이트
     public void update(int quantity, int price){
