@@ -3,14 +3,13 @@ server:
     encoding:
       charset: utf-8
       force: true
-  port: 8083
+  port: 8011
 spring:
+  application:
+    name: product-service
   config:
     import:
       secret.yml
-#  sql:
-#    init:
-#      mode: always # 더미데이터 삽입
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,10 +17,6 @@ spring:
     properties:
       hibernate:
         format_sql: true  # SQL을 보기 좋게 포맷후 출력
-#        dialect: org.hibernate.dialect.MySQL5InnoDBDialect  # MySQL InnoDB 최적화를 위한 방언 설정
-    defer-datasource-initialization: true # 데이터 소스의 초기화 지연, 테이블이 생성 된 후 데이터 삽입
-  #      default_batch_fetch_size: 100  # 일괄 처리 시 기본적으로 가져오는 행 수
-#    open-in-view: false  # Open EntityManager in View 패턴 사용 비활성화
   data:
     redis:
       host: localhost
@@ -29,8 +24,20 @@ spring:
       port: 6379
 logging:
   level:
-    '[com.jy_dev.ninishop]': DEBUG
+#    '[com.jy_dev.ninishop]': DEBUG
     '[org.hibernate.type]': TRACE
 
-#file:
-#  path: ./images/
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

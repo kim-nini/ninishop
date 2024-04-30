@@ -1,0 +1,51 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+#    loadbalancer:
+#      ribbon:
+#        enabled: false
+    gateway:
+      routes:
+        - id: user-service # 라우팅을 구분하기 위한 id
+          uri: lb://user-service # 요청이 라우팅 되는 경로 uri
+          # lb프로토콜(lb://)의 경로를 지정하면 기본적으로 유레카 서버에서 호스트에 해당하는 서비스를 찾고 로드밸런싱을 수행
+          predicates: # 해당 라우팅을 진행할 uri조건으로 gateway로 들어오는 요청 uri를 지정
+            # ex) /api/user 의 요청이 들어오면 해당 라우팅이 진행되어 경로 uri로 지정한 lb://user-service가 호출
+            - Path=/user-service/**
+          filters:
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/product-service/**
+          filters:
+            - RewritePath=/product-service/(?<segment>.*), /$\{segment}
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order-service/**
+          filters:
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    org.springframework.cloud.loadbalancer: DEBUG
+    org.springframework.cloud.gateway: DEBUG
