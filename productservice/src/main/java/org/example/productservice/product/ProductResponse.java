@@ -11,11 +11,11 @@ public class ProductResponse {
     @Getter
     @Setter
     public static class findAllDTO{
-        private int id;
+        private long id;
         private String productName;
         private String description;
         private String image;
-        private int price;
+        private long price;
 
         public findAllDTO(Product product) {
             this.id = product.getId();
@@ -30,11 +30,11 @@ public class ProductResponse {
     @Getter
     @Setter
     public static class ProductDetailDTO{
-        private int id;
+        private long id;
         private String productName;
         private String description;
         private String image;
-        private int price;
+        private long price;
 
         private List<OptionDTO> options;
 
@@ -52,9 +52,9 @@ public class ProductResponse {
         @Getter
         @Setter
         public class OptionDTO{
-            private int id;
+            private long id;
             private String optionName;
-            private int price;
+            private long price;
 
             public OptionDTO(Option option) {
                 this.id = option.getId();

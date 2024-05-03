@@ -20,17 +20,17 @@ public class Option {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
     @Column(length = 100, nullable = false)
     private String optionName;
-    private int price;
+    private long price;
 
     @Builder
-    public Option(int id, Product product, String optionName, int price) {
+    public Option(long id, Product product, String optionName, long price) {
         this.id = id;
         this.product = product;
         this.optionName = optionName;

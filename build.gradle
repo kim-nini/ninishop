@@ -46,8 +46,8 @@ project(':productservice') {
 
 project(':orderservice'){
     dependencies {
-        implementation project(':productservice')
-        implementation project(':userservice')
+//        implementation project(':productservice')
+//        implementation project(':userservice')
     }
 }
 

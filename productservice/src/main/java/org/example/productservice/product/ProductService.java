@@ -28,7 +28,7 @@ public class ProductService {
     }
 
     // 상품 상세조회
-    public ProductResponse.ProductDetailDTO getProductDetail(int id) {
+    public ProductResponse.ProductDetailDTO getProductDetail(long id) {
         Product product = productJPARepository.findById(id).orElseThrow(() -> new Exception401("no products: "+id));
         List<Option> option = optionJPARepository.findByProductId(id);
         return new ProductResponse.ProductDetailDTO(product, option);
