@@ -22,14 +22,10 @@ public class ApiUtils {
     @Getter
     @Setter
     @AllArgsConstructor
-//    @NoArgsConstructor
     public static class ApiResult<T> { // 제네릭으로 응답을 어떤형태로든 받아올 수있음 -> 재사용성 높임
         private final boolean success; // 성공 또는 실패
-//        private boolean success; // 성공 또는 실패
         private final T response;
-//        private T response;
         private final ApiError error;
-//        private ApiError error;
 
         @Override
         public String toString() {

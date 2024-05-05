@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // jpa때무넹 피료
 @Entity
 @Table(name = "cart_tb",
-        indexes = {
-                @Index(name = "cart_user_id_idx", columnList = "user_id"),
-                @Index(name = "cart_option_id_idx", columnList = "option_id")
-        },
+//        indexes = {
+//                @Index(name = "cart_user_id_idx", columnList = "user_id"),
+//                @Index(name = "cart_option_id_idx", columnList = "option_id")
+//        },
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_cart_option_user", columnNames = {"user_id", "option_id"})
         })
@@ -22,13 +22,9 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    private User user; // user별로 장바구니에 묶여 있음.
     @Column(nullable = false)
     private long userId; // user-service UserId 참조
 
-    //    @OneToOne(fetch = FetchType.LAZY)
-//    private Option option;
     @Column(nullable = false)
     private long optionId; // Product 서비스에서의 Option ID 참조
 

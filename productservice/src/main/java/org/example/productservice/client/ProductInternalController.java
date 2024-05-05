@@ -3,6 +3,7 @@ package org.example.productservice.client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.productservice.core.utils.ApiUtils;
+import org.example.productservice.option.OptionRequest;
 import org.example.productservice.option.OptionService;
 import org.example.productservice.product.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,8 @@ public class ProductInternalController {
     // 장바구니 조회
     @GetMapping("/{optionId}")
     public ResponseEntity<?> getDetailsForCartList(@PathVariable("optionId") long optionId) {
-        ApiUtils.ApiResult apiResult = ApiUtils.success(optionService.findByOptionId(optionId));
-        return ResponseEntity.ok(apiResult);
+//        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(optionService.findByOptionId(optionId));
+
+        return ResponseEntity.ok(optionService.findByOptionId(optionId));
     }
 }

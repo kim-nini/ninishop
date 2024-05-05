@@ -1,54 +1,59 @@
 package org.example.orderservice.order;
 
-//import com.jy_dev.ninishop.option.Option;
-//import com.jy_dev.ninishop.order.item.Item;
-//import com.jy_dev.ninishop.product.Product;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.example.orderservice.client.product.ProductClientResponse;
+import org.example.orderservice.order.item.Item;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderResponse {
-    private int orederId;
-    private List<ProductDTO> productList;
-    private int totalPrice;
+    private long orderId;
+    private ProductDTO productList;
 
-//    public OrderResponse(Order order, List<Item> itemList) {
-//        this.orederId = order.getId();
-//        this.productList = itemList.stream()
-//                .map(item -> item.getOption().getProduct()).distinct()
-//                .map(product -> new ProductDTO(product, itemList))
-//                .collect(Collectors.toList());
-//        this.totalPrice = itemList.stream()
-//                .mapToInt(item -> item.getOption().getPrice()*item.getQuantity())
-//                .sum();
-//    }
+    @Builder
+    public OrderResponse(Order order, ProductClientResponse.DetailForCartList productAndOptionDetail, Item item) {
+        this.orderId = order.getId();
+        this.productList = ProductDTO.builder()
+                .detail(productAndOptionDetail)
+                .item(item)
+                .build();
+    }
 
     @Getter
-    public static class ProductDTO{
+    public static class ProductDTO {
         private String productName;
-        private List<ItemDTO> itemList;
+        private ItemDTO itemList;
 
-//        public ProductDTO(Product product, List<Item> items) {
-//            this.productName = product.getProductName();
-//            this.itemList = items.stream()
-//                    .map(item -> new ItemDTO(item, item.getOption()))
-//                    .collect(Collectors.toList());
-//        }
+        @Builder
+        public ProductDTO(ProductClientResponse.DetailForCartList detail, Item item) {
+            this.productName = detail.getProductName();
+            this.itemList = ItemDTO.builder()
+                    .detail(detail)
+                    .item(item)
+                    .build();
+        }
 
         @Getter
-        public class ItemDTO{
-            private int id;
+        public static class ItemDTO {
+            private long id;
             private String optionName;
-            private int quantity;
-            private int price;
+            private long quantity;
+            private long price;
 
-//            public ItemDTO(Item item, Option option) {
-//                this.id = item.getId();
-//                this.optionName = option.getOptionName();
-//                this.quantity = item.getQuantity();
-//                this.price = option.getPrice() * item.getQuantity();
-//            }
+            @Builder
+            public ItemDTO(ProductClientResponse.DetailForCartList detail, Item item) {
+                this.id = item.getId();
+                this.optionName = detail.getOptionName();
+                this.quantity = item.getQuantity();
+                this.price = detail.getOptionPrice() * item.getQuantity();
+            }
         }
     }
 

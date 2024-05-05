@@ -65,6 +65,7 @@ public class CartService {
 //            OptionDetailsDTO optionDetails = productServiceClient.getOptionDetails(cart.getOptionId());
 //            productClient.getDetailForCart(cart.getOptionId());
             return new CartResponse.CartDTO(cart, productClient.getDetailForCart(cart.getOptionId()));
+//            return new CartResponse.CartDTO(cart, productClient.getDetailForCart(cart.getOptionId()).getResponse());
         }).collect(Collectors.toList());
 
 //        List<CartResponse.ProductDTO> products = new ArrayList<>();
@@ -106,6 +107,13 @@ public class CartService {
 //        long totalPrice = 1;
 //        return new CartResponse.FindCartDTO(cartList);
 //        return new CartResponse.FindCartDTO(products, totalPrice);
+    }
+
+    public void deleteOptionFromCart(String userId, String optionId) {
+        long longUserId = Long.parseLong(userId);
+        long longOptionId = Long.parseLong(optionId);
+
+        cartJPARepository.deleteByOptionIdAndUserId(longUserId,longOptionId);
     }
 
 

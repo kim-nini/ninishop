@@ -12,35 +12,37 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="item_tb", indexes = {
-        @Index(name = "item_option_id_idx", columnList = "option_id"),
-        @Index(name = "item_order_id_idx", columnList = "order_id")
-})
+@Table(name="item_tb",
+        indexes = {@Index(name = "item_option_id_idx", columnList = "option_id"),
+        @Index(name = "item_order_id_idx", columnList = "order_id")}
+)
 public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    private Option option;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    private Order order;
+    // 아이템엔 옵션아이디가 하나 들어가야함
+    @Column
+    private long optionId;
+
+    @Column
+    private long orderId;
 
     @Column(nullable = false)
-    private int quantity;
+    private long quantity;
+
     @Column(nullable = false)
-    private int price;
-
-    private int stock;
+    private long price;
 
 
-//    @Builder
-//    public Item(int id, Option option, Order order, int quantity, int price, int stock) {
-//        this.id = id;
-//        this.option = option;
-//        this.order = order;
-//        this.quantity = quantity;
-//        this.price = price;
-//    }
+
+    @Builder
+    public Item(long id, long optionId, long orderId, long quantity, long price) {
+        this.id = id;
+        this.optionId = optionId;
+        this.orderId = orderId;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

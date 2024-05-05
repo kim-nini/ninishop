@@ -1,65 +1,73 @@
 package org.example.orderservice.order;
 
-//import com.jy_dev.ninishop.core.errors.exception.Exception400;
-//import com.jy_dev.ninishop.option.OptionJPARepository;
-//import com.jy_dev.ninishop.order.item.Item;
-//import com.jy_dev.ninishop.order.item.ItemJPARepository;
-//import com.jy_dev.ninishop.user.User;
 import lombok.RequiredArgsConstructor;
 import org.example.orderservice.cart.Cart;
 import org.example.orderservice.cart.CartJPARepository;
+import org.example.orderservice.client.product.ProductClientResponse;
 import org.example.orderservice.core.errors.exception.Exception400;
+import org.example.orderservice.order.item.Item;
 import org.example.orderservice.order.item.ItemJPARepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.example.orderservice.client.product.ProductClient;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class OrderService {
 
+    private final ProductClient productClient;
     private final OrderJPARepository orderJPARepository;
     private final CartJPARepository cartJPARepository;
-//    private final OptionJPARepository optionJPARepository;
     private final ItemJPARepository itemJPARepository;
 
-//    @Transactional
-//    public OrderResponse order(User user) {
-//        // 일단 장바구니 가져와
-//        List<Cart> carts = cartJPARepository.findByUserId(user.getId());
-//        if(carts.isEmpty()){ //없으면 던져
-//            throw new Exception400("there is no carts for user : "+ user.getId());
-//        }
+    @Transactional
+    public void orderTotalCartList(String stringUserId) {
+        long userId = Long.parseLong(stringUserId);
+
+        // userId 장바구니 가져오기
+        List<Cart> carts = cartJPARepository.findByUserId(userId);
+        if (carts.isEmpty()) {
+            throw new Exception400("there is no carts for user : " + userId);
+        }
+
+        // 주문 생성
+        Order order = Order.builder()
+                .userId(userId)
+                .build();
+        orderJPARepository.save(order);
+
+        // 주문아이템 생성 및 저장
+        List<Item> items = carts.stream()
+                .map(cart -> Item.builder()
+                        .optionId(cart.getOptionId())
+                        .orderId(order.getId())
+                        .quantity(cart.getQuantity())
+                        .price(cart.getPrice())
+                        .build())
+                .collect(Collectors.toList());
+        itemJPARepository.saveAll(items);
+
+        // 장바구니 삭제
+        cartJPARepository.deleteByUserId(userId);
+
+    }
+
+    public OrderResponse getOrder(String orderId) {
+        // 주문 내역 dto
+//        List<OrderResponse> responses = items.stream()
+//                .map(item -> {
+//                    ProductClientResponse.DetailForCartList details = productClient.getDetailForCart(item.getOptionId());
+//                    return new OrderResponse(order, details, item);
+//                }).collect(Collectors.toList());
 //
-//        //주문
-//        Order order = Order.builder()
-//                .user(user)
-//                .build();
-//
-//        orderJPARepository.save(order);
-//
-//        //주문내역 저장 - carts = item
-//        List<Item> items = new ArrayList<>();
-//
-//        for(Cart cart : carts){
-//            Item item = Item.builder()
-//                    .option(cart.getOption())
-//                    .order(order)
-//                    .quantity(cart.getQuantity())
-//                    .price(cart.getPrice())
-//                    .build();
-//
-//            items.add(item);
-//        }
-//        itemJPARepository.saveAll(items);
-//
-//        //장바구니 지워
-//        cartJPARepository.deleteByUserId(user.getId());
-//
-//        return new OrderResponse(order, items);
-//
-//    }
+//        return responses;
+        return null;
+    }
 }

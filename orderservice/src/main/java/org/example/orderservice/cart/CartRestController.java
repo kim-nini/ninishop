@@ -24,13 +24,8 @@ public class CartRestController {
         cartService.addCart(request, userId);
         return ResponseEntity.ok(ApiUtils.success(null));
     }
-//    public ResponseEntity<?> addCart(
-//            @RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
-//        cartService.addCart(request,user.getUser());
-//        return ResponseEntity.ok(ApiUtils.success(null));
-//    }
 
-    // 장바구니 업데이트
+    // 장바구니 업데이트-> 장바구니 담기로직으로 구현
 //    @Operation(summary = "장바구니 상품 update API", description = "해당 유저의 장바구니 상품의 option 을 수정합니다.")
 //    @PostMapping("/carts/update")
 //    public ResponseEntity<?> updateCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
@@ -48,9 +43,14 @@ public class CartRestController {
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(response);
         return ResponseEntity.ok(apiResult);
     }
-//
-////    @Operation(summary = "장바구니 삭제 API", description = "해당 유저의 장바구니를 삭제합니다.")
-//    @PostMapping("/carts/clear")
+
+//    @Operation(summary = "장바구니 삭제 API", description = "해당 유저의 장바구니를 삭제합니다.")
+    // 장바구니 삭제
+    @PostMapping("/carts/clear")
+    public ResponseEntity<?> deleteOptionFromCart(@RequestHeader("userId") String userId, @RequestBody String optionId){
+        cartService.deleteOptionFromCart(userId,optionId);
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
 //    public ResponseEntity<?> deleteCart(@AuthenticationPrincipal CustomUserDetails user){
 //        cartService.deleteCart(user.getUser());
 //        return ResponseEntity.ok(ApiUtils.success(null));
