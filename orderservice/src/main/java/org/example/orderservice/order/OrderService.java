@@ -59,15 +59,18 @@ public class OrderService {
 
     }
 
-    public OrderResponse getOrder(String orderId) {
-        // 주문 내역 dto
-//        List<OrderResponse> responses = items.stream()
-//                .map(item -> {
-//                    ProductClientResponse.DetailForCartList details = productClient.getDetailForCart(item.getOptionId());
-//                    return new OrderResponse(order, details, item);
-//                }).collect(Collectors.toList());
+//    @Transactional(readOnly = true)
+//    public OrderResponse getOrder(long orderId) {
+//        List<Item> items = itemJPARepository.findAllByOrderId(orderId);
 //
-//        return responses;
-        return null;
-    }
+//        // 주문 내역 dto
+////        OrderResponse responses = items.stream()
+////                .map(item -> {
+////                    ProductClientResponse.DetailForCartList details = productClient.getDetailForCart(item.getOptionId());
+////                    return new OrderResponse(orderId, details, items);
+////                });
+//
+////        return responses;
+//        return null;
+//    }
 }

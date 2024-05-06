@@ -15,15 +15,19 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class OrderResponse {
     private long orderId;
-    private ProductDTO productList;
+    private List<ProductDTO> productList;
 
     @Builder
-    public OrderResponse(Order order, ProductClientResponse.DetailForCartList productAndOptionDetail, Item item) {
-        this.orderId = order.getId();
-        this.productList = ProductDTO.builder()
-                .detail(productAndOptionDetail)
-                .item(item)
-                .build();
+    public OrderResponse(long orderId, ProductClientResponse.DetailForCartList productAndOptionDetail, List<Item> items) {
+        this.orderId = orderId;
+        this.productList = items.stream()
+                .map(item -> {
+                    return ProductDTO.builder()
+                            .detail(productAndOptionDetail)
+                            .item(item)
+                            .build();
+                }).collect(Collectors.toList());
+
     }
 
     @Getter

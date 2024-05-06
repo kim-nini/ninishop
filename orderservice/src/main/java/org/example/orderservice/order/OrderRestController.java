@@ -28,8 +28,12 @@ public class OrderRestController {
 //    }
 
 
-    // (기능13) 주문 결과 확인
-    //@GetMapping("/orders/{id}")
+//     (기능13) 주문 결과 확인
+//    @GetMapping("/orders/{orderId}")
+//    public ResponseEntity<?> getOrder(@PathVariable("orderId") long orderId) {
+//        List<OrderResponse> response =  orderService.getOrder(orderId);
+//        return ResponseEntity.ok(ApiUtils.success(response));
+//    }
 
 
     // 사용 안함
