@@ -14,20 +14,24 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class OrderResponse {
-    private long orderId;
-    private List<ProductDTO> productList;
 
-    @Builder
-    public OrderResponse(long orderId, ProductClientResponse.DetailForCartList productAndOptionDetail, List<Item> items) {
-        this.orderId = orderId;
-        this.productList = items.stream()
-                .map(item -> {
-                    return ProductDTO.builder()
-                            .detail(productAndOptionDetail)
-                            .item(item)
-                            .build();
-                }).collect(Collectors.toList());
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class OrderList{
+        private long orderId;
+        private List<ProductDTO> productList;
+        private long totalPrice;
+
+        @Builder
+        public OrderList(long orderId, List<ProductDTO> productList) {
+            this.orderId = orderId;
+            this.productList = productList;
+            this.totalPrice =  productList.stream()
+                    .mapToLong(product -> product.getItemList().getPrice())
+                    .sum();
+        }
     }
 
     @Getter
@@ -44,20 +48,21 @@ public class OrderResponse {
                     .build();
         }
 
-        @Getter
-        public static class ItemDTO {
-            private long id;
-            private String optionName;
-            private long quantity;
-            private long price;
+    }
 
-            @Builder
-            public ItemDTO(ProductClientResponse.DetailForCartList detail, Item item) {
-                this.id = item.getId();
-                this.optionName = detail.getOptionName();
-                this.quantity = item.getQuantity();
-                this.price = detail.getOptionPrice() * item.getQuantity();
-            }
+    @Getter
+    public static class ItemDTO {
+        private long id;
+        private String optionName;
+        private long quantity;
+        private long price;
+
+        @Builder
+        public ItemDTO(ProductClientResponse.DetailForCartList detail, Item item) {
+            this.id = item.getId();
+            this.optionName = detail.getOptionName();
+            this.quantity = item.getQuantity();
+            this.price = detail.getOptionPrice() * item.getQuantity();
         }
     }
 

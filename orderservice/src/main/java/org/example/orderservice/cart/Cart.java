@@ -31,6 +31,7 @@ public class Cart {
     @Column(nullable = false)
     private long quantity;
 
+    // 삭제 예정
     @Column(nullable = false)
     private long price;
 

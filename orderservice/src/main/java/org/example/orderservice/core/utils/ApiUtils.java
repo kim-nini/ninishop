@@ -8,11 +8,14 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.http.HttpStatus;
 
-// 웹에서 보내는 API응담을 일관되게 만들어주는 클래스
+// 웹에서 보내는 API응답을 일관되게 만들어주는 클래스
 public class ApiUtils {
 
     public static <T> ApiResult<T> success(T response) { // 성공적인 api응답 반환
         return new ApiResult<>(true, response, null);
+    }
+    public static <T> ApiResult<T> success() { // 성공적인 api응답 반환
+        return new ApiResult<>(true, null, null);
     }
 
     public static ApiResult<?> error(String message, HttpStatus status) { // api 호출 실패

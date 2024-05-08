@@ -32,6 +32,7 @@ public class Item {
     @Column(nullable = false)
     private long quantity;
 
+    // option id별 1개 가격
     @Column(nullable = false)
     private long price;
 

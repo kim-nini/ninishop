@@ -1,6 +1,8 @@
 package org.example.orderservice.order;
 
+import io.micrometer.core.annotation.Counted;
 import jakarta.persistence.*;
+import jdk.jshell.Snippet;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +27,10 @@ public class Order {
     @Column(nullable = false)
     private long userId;
 
-    private long status;
+//    @Column(nullable = false)
+//    @Enumerated(EnumType.STRING)
+    @Convert(converter = TinyIntConverter.class)
+    private StatusEnum status;
 
     @CreationTimestamp // LocalDateTime : 시간까지
     private LocalDate orderDate;
@@ -33,8 +38,9 @@ public class Order {
 
 
     @Builder
-    public Order(long id, long userId, String status, String orderDate) {
+    public Order(long id, long userId, StatusEnum status, String orderDate) {
         this.id = id;
+        this.status = status;
         this.userId = userId;
     }
 }

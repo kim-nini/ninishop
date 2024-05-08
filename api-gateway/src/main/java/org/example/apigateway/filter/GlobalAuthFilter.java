@@ -21,33 +21,33 @@ import java.util.List;
 @Component
 public class GlobalAuthFilter extends AbstractGatewayFilterFactory<GlobalAuthFilter.Config> {
 
-    private final JwtTokenProvider jwtTokenProvider;
-
-    public GlobalAuthFilter(JwtTokenProvider jwtTokenProvider) {
-        super(Config.class);
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+//    private final JwtTokenProvider jwtTokenProvider;
+//
+//    public GlobalAuthFilter(JwtTokenProvider jwtTokenProvider) {
+//        super(Config.class);
+//        this.jwtTokenProvider = jwtTokenProvider;
+//    }
 
     /*
     Request URI가 인증을 거치지 않을 ExcludeURL에 포함되는지 판단
    포함된다면, chain.filter(exchange)로 아래 필터 로직 수행하지 않고 다음으로 진행
    포함되지 않는다면 아래의 인증 로직 수행
+    1. filter 에서 리턴을 해도 컨트롤러처럼 동작하지 않음
+    -> throw를 해도 할 수 있는게 없음 -> return on error
     * */
     @Override
     public GatewayFilter apply(Config config) {
-//        final ServerHttpRequest request; // 요청관련 정보객체
-//        final ServerHttpResponse response; // 응답 관련 정보객체
-
 
         return (((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
-
             HttpHeaders headers = request.getHeaders();
-            if (!headers.containsKey(HttpHeaders.AUTHORIZATION)) {
+
+            List<String> strings = headers.get(HttpHeaders.AUTHORIZATION);
+
+            if (strings == null || strings.isEmpty()) {
                 return onError(exchange, "No Authorization Header", HttpStatus.UNAUTHORIZED);
             }
-
-            String authorizationHeader = headers.get(HttpHeaders.AUTHORIZATION).get(0);
+            String authorizationHeader = strings.getFirst();
             String jwt = authorizationHeader.replace("Bearer ", "");
 
             ServerHttpRequest newRequest = null;
@@ -68,9 +68,10 @@ public class GlobalAuthFilter extends AbstractGatewayFilterFactory<GlobalAuthFil
                 log.error("토큰 검증 실패");
             } catch (TokenExpiredException tee) {
                 log.error("토큰 만료됨");
-            } finally {
-                return chain.filter(exchange.mutate().request(newRequest).build());
             }
+
+            assert newRequest != null;
+            return chain.filter(exchange.mutate().request(newRequest).build());
 
         }));
     }

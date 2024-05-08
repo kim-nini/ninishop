@@ -1,12 +1,17 @@
 package org.example.orderservice.order;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 public class OrderRequest {
 
-    public static class SaveItemDTO{
-        private long orderListId;
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class OrderRequestDTO {
         private long optionId;
         private long quantity;
         private long price;
-
     }
 }

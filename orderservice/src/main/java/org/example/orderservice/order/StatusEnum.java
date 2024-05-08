@@ -1,22 +1,20 @@
 package org.example.orderservice.order;
 
+import lombok.Getter;
+
+@Getter
 public enum StatusEnum {
-    ORDER_COMPLETED(0,"주문완료"),
-    ORDER_CANCELLED(1,"주문취소"),
-    ON_DELIVERY(2,"배송중"),
-    DELIVERY_OVER(3,"배송완료"),
-    ON_RETURN(4,"반품신청중"),
-    RETURN_OVER(5,"반품완료");
-    private int status;
-    private String desc;
-    private StatusEnum(int status, String desc) {
-        this.status = status;
-        this.desc = desc;
+    ORDER_COMPLETED(0),
+    ON_DELIVERY(1),
+    DELIVERY_COMPLETED(2),
+    ORDER_CANCELLED(3),
+    ON_RETURN(4),
+    RETURN_COMPLETED(5);
+
+    private final Integer value;
+
+    StatusEnum(Integer value) {
+        this.value = value;
     }
-    public int getStatus() {
-        return status;
-    }
-    public String getDesc() {
-        return desc;
-    }
+
 }

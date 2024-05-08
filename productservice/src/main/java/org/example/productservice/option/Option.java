@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.productservice.core.errors.exception.Exception500;
 import org.example.productservice.product.Product;
 
 // 재고 관리 여부는 없다.
@@ -29,11 +30,27 @@ public class Option {
     private String optionName;
     private long price;
 
+    private long stock;
+
     @Builder
     public Option(long id, Product product, String optionName, long price) {
         this.id = id;
         this.product = product;
         this.optionName = optionName;
         this.price = price;
+    }
+
+    public void decreaseStock(Long unitCount) {
+        long remainingStock = this.stock - unitCount;
+
+        if (remainingStock < 0) {
+            throw new Exception500("OUT OF STOCK");
+        }
+        this.stock = remainingStock;
+    }
+
+
+    public void decreaseStocks(long quantity) {
+        this.stock -= quantity;
     }
 }

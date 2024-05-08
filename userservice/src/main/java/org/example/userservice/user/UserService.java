@@ -78,7 +78,6 @@ public class UserService {
                     .orElseThrow(() -> new Exception500("cannot find user : " + request.getEmail()));
 
             String password = passwordEncoder.encode(request.getPassword());
-
             user.updateInfo(password, aes256.aesCBCEncode(request.getAddress()), aes256.aesCBCEncode(request.getPhoneNumber()));
 
             userJPARepository.save(user);
