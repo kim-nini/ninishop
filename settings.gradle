@@ -1,6 +1,8 @@
 rootProject.name = 'ninishop'
-include 'productservice'
-include 'userservice'
-include 'orderservice'
+include 'product-service'
+include 'user-service'
+include 'order-service'
 include 'eureka-server'
 include 'api-gateway'
+include 'scheduler-service'
+

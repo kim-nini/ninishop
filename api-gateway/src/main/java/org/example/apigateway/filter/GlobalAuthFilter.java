@@ -21,12 +21,9 @@ import java.util.List;
 @Component
 public class GlobalAuthFilter extends AbstractGatewayFilterFactory<GlobalAuthFilter.Config> {
 
-//    private final JwtTokenProvider jwtTokenProvider;
-//
-//    public GlobalAuthFilter(JwtTokenProvider jwtTokenProvider) {
-//        super(Config.class);
-//        this.jwtTokenProvider = jwtTokenProvider;
-//    }
+    public GlobalAuthFilter() {
+        super(Config.class);
+    }
 
     /*
     Request URI가 인증을 거치지 않을 ExcludeURL에 포함되는지 판단

@@ -34,17 +34,17 @@ subprojects {
     jar { enabled = true }
 }
 
-project(':userservice') {
+project(':user-service') {
     dependencies {
     }
 }
 
-project(':productservice') {
+project(':product-service') {
     dependencies {
     }
 }
 
-project(':orderservice'){
+project(':order-service'){
     dependencies {
 //        implementation project(':productservice')
 //        implementation project(':userservice')
