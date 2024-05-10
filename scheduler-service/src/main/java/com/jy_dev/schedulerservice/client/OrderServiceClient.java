@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 public interface OrderServiceClient {
 
 
-    @PostMapping("/api/orders/updateStatus")
+    @PostMapping("/api/internal/orders/updateStatus")
     void updateOrderStatus();
 }

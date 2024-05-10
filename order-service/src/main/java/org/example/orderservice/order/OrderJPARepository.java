@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface OrderJPARepository extends JpaRepository<Order, Integer> {
+public interface OrderJPARepository extends JpaRepository<Order, Long> {
 
 
-    List<Order> findOrdersByStatusAndOrderDate(int status, LocalDate date);
+    List<Order> findOrdersByStatusAndOrderDate(StatusEnum status, LocalDate orderDate);
 }

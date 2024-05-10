@@ -14,7 +14,7 @@ public class ApiUtils {
     public static <T> ApiResult<T> success(T response) { // 성공적인 api응답 반환
         return new ApiResult<>(true, response, null);
     }
-    public static <T> ApiResult<T> success() { // 성공적인 api응답 반환
+    public static <T> ApiResult<T> success() {
         return new ApiResult<>(true, null, null);
     }
 

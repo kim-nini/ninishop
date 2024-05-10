@@ -1,9 +1,11 @@
 package org.example.orderservice.order;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.orderservice.cart.CartJPARepository;
 import org.example.orderservice.client.product.ProductClientRequest;
 import org.example.orderservice.client.product.ProductClientResponse;
+import org.example.orderservice.core.errors.exception.Exception400;
 import org.example.orderservice.order.item.Item;
 import org.example.orderservice.order.item.ItemJPARepository;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class OrderService {
 
     private final ProductClient productClient;
@@ -25,27 +28,23 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
     private final ItemJPARepository itemJPARepository;
 
-    // 주문하기 눌렀을 때 재고를 확인하는 메소드
     @Transactional
     public void saveOrder(String stringUserId, List<OrderRequest.OrderRequestDTO> orderRequestDTOList) {
         long userId = Long.parseLong(stringUserId);
-
         // 주문 하기 전에 재고 먼저 확인하면서 재고도 차감해주는 페인호출
         // 재고가 있는 경우에만 결제 완료 이후 로직을 실행해야함
         // 1개라도 재고가 부족 할 경우 실행X
         // 페인 -> 프로덕트 -> 재고가부족할경우 EXCEPTION -> saveOrder 까지 취소됨
-        List<ProductClientRequest.OptionDetailForStockCheck> requestList = new ArrayList<>();
-        orderRequestDTOList.stream().forEach(dto -> requestList.add(new ProductClientRequest.OptionDetailForStockCheck(dto)));
-        productClient.stockCheck(requestList);
+        List<ProductClientRequest.OptionDetailsForStockUpdate> requestList = new ArrayList<>();
+        orderRequestDTOList.forEach(dto -> requestList.add(new ProductClientRequest.OptionDetailsForStockUpdate(dto)));
+        productClient.decreaseStock(requestList);
         //-----------------결제 완료 이후 로직 -------------------
-        // 주문 생성
         Order order = Order.builder()
                 .userId(userId)
                 .status(StatusEnum.ORDER_COMPLETED)
                 .build();
         orderJPARepository.save(order);
 
-        // 주문아이템 생성 및 저장
         List<Item> items = orderRequestDTOList.stream()
                 .map(dto -> Item.builder()
                         .optionId(dto.getOptionId())
@@ -81,12 +80,32 @@ public class OrderService {
     public void updateOrderStatus() {
         // 배송상태가 ORDER_COMPLETED(0) 이고, D+1 인 orders
         LocalDate yesterday = LocalDate.now().minusDays(1);
-        List<Order> completedOrders = orderJPARepository.findOrdersByStatusAndOrderDate(0,yesterday);
+        List<Order> completedOrders = orderJPARepository.findOrdersByStatusAndOrderDate(StatusEnum.ORDER_COMPLETED,yesterday);
+        log.info("completed orders: {}", completedOrders.get(0));
         completedOrders.forEach(order -> { order.updateStatus(StatusEnum.ON_DELIVERY); });
 
         // 배송상태가 ON_DELIVERY(1) 이고, D+2 인 orders
         LocalDate beforeYesterday = LocalDate.now().minusDays(2);
-        List<Order> onDeliveryOrders = orderJPARepository.findOrdersByStatusAndOrderDate(1,beforeYesterday);
+        List<Order> onDeliveryOrders = orderJPARepository.findOrdersByStatusAndOrderDate(StatusEnum.ON_DELIVERY,beforeYesterday);
         onDeliveryOrders.forEach(order -> { order.updateStatus(StatusEnum.DELIVERY_COMPLETED); });
+    }
+
+    // 주문 취소
+    @Transactional
+    public void cancelOrder(long orderId) {
+        Order order = orderJPARepository.findById(orderId).orElseThrow(() -> new Exception400("Order not found"));
+
+        if(order.getStatus().equals(StatusEnum.ORDER_COMPLETED)) {
+            List<Item> items = itemJPARepository.findAllByOrderId(orderId);
+            List<ProductClientRequest.OptionDetailsForStockUpdate> requestList = new ArrayList<>();
+            items.forEach(item -> requestList.add(new ProductClientRequest.OptionDetailsForStockUpdate(item)));
+        } else {
+            throw new Exception400("not available cancel");
+        }
+
+
+    // orderId + status 로 조회 -> 없을시 exception
+        // orderId로 item 리스트 받아오기 -> 받아온 리스트에서 optionId와 quantity만 dto로 리스트뽑기
+        // 클라이언트 호출해서 dto 보내기
     }
 }

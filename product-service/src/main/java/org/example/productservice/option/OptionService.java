@@ -31,15 +31,9 @@ public class OptionService {
         // - 해줄때 재고가 없으면 exception
         for (OptionRequest.OptionDetailForStockCheck detail : requestData) {
             Option option = optionRepository.findById(detail.getOptionId()).orElseThrow(() -> new Exception400("옵션이 없습니다."));
-//            long stock = option.getStock();
-//            long quantity = detail.getQuantity();
-//            if(!(stock - quantity >= 0)){
-////                return false;
-//            }
             option.decreaseStocks(detail.getQuantity());
             // 무조건 빨리 구현하는 방법..
         }
-//        return true;
     }
 
 

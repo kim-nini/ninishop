@@ -26,13 +26,26 @@ public class OrderRestController {
 //        return ResponseEntity.ok(ApiUtils.success(responseDTO));
 //    }
 
-    // orderId로 주문내역 상세 조회
+    /*
+    * 주문조회
+    * @param orderId
+    * @return
+    * */
     @GetMapping("/{orderId}")
     public ResponseEntity<ApiUtils.ApiResult<OrderResponse.OrderList>> getOrder(@PathVariable("orderId") long orderId) {
         OrderResponse.OrderList response =  orderService.getOrder(orderId);
         return ResponseEntity.ok(ApiUtils.success(response));
     }
 
+    /*
+    * 주문취소
+    * @param orderId
+    * */
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<ApiUtils.ApiResult<Object>> cancelOrder(@PathVariable("orderId") long orderId) {
+        orderService.cancelOrder(orderId);
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
 
 
 

@@ -13,7 +13,7 @@ public class TinyIntConverter implements AttributeConverter<StatusEnum, Integer>
         return status == null ? StatusEnum.ORDER_COMPLETED.getValue() : status.getValue();
     }
 
-    // 데이터베이스의 String 타입 컬럼을 엔티티의 List<String> 타입으로 변환
+
     @Override
     public StatusEnum convertToEntityAttribute(Integer dbData) {
         for (StatusEnum status : StatusEnum.values()) {

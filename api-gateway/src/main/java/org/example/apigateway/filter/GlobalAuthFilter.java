@@ -37,6 +37,7 @@ public class GlobalAuthFilter extends AbstractGatewayFilterFactory<GlobalAuthFil
 
         return (((exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
+//            request.getURI().toString().contains("로그인apiurl") -> 이렇게하면 얘만 뺄수잇음
             HttpHeaders headers = request.getHeaders();
 
             List<String> strings = headers.get(HttpHeaders.AUTHORIZATION);

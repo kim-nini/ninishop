@@ -25,16 +25,6 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
-    // 장바구니 업데이트-> 장바구니 담기로직으로 구현
-//    @Operation(summary = "장바구니 상품 update API", description = "해당 유저의 장바구니 상품의 option 을 수정합니다.")
-//    @PostMapping("/carts/update")
-//    public ResponseEntity<?> updateCart(@RequestBody List<CartRequest> request, @AuthenticationPrincipal CustomUserDetails user){
-//    public ResponseEntity<?> updateCart(@RequestBody List<CartRequest> request, @RequestHeader String userId){
-//        CartResponse.CartUpdateDTO response = cartService.updateCart(request, userId);
-//        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(response);
-//        return ResponseEntity.ok(apiResult);
-//    }
-
     // 장바구니 보기 - (주문화면, 결재화면)
 //    @Operation(summary = "장바구니 조회 API", description = "해당 유저의 장바구니 상품을 조회합니다.")
     @GetMapping
