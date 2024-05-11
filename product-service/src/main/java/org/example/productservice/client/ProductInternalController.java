@@ -23,11 +23,16 @@ public class ProductInternalController {
         return ResponseEntity.ok(optionService.findByOptionId(optionId));
     }
 
-    // 주문 요청시 재고 조회 및 업데이트
-    @PostMapping("/stocks")
-    public void decreaseStockForOrderRequest(@RequestBody List<OptionRequest.OptionDetailForStockCheck> optionDetailForStockCheckList) {
+    // 주문 요청시 재고 조회, 차감
+    @PostMapping("/decrease-stocks")
+    public void decreaseStockForOrderRequest(@RequestBody List<OptionRequest.OptionDetailForStockUpdate> optionDetailForStockUpdateList) {
         // body 가 void 라는 뜻이라서 header, statusLine 은 응답함 -> statusLine 값이 200이 아닐 경우를 처리하는 로직을 생성하면됨
-        optionService.decreaseStockByOptionDetail(optionDetailForStockCheckList);
+        optionService.decreaseStockByOption(optionDetailForStockUpdateList);
     }
 
+    /* 주문 취소시 상품 재고 복원 */
+    @PostMapping("/restore-stocks")
+    public void restoreStock(@RequestBody List<OptionRequest.OptionDetailForStockUpdate> optionDetailForStockUpdateList) {
+        optionService.restoreStockByOption(optionDetailForStockUpdateList);
+    }
 }

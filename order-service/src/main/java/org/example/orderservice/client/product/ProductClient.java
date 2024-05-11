@@ -16,9 +16,10 @@ public interface ProductClient {
     ProductClientResponse.DetailForCartList getDetailForCart(@PathVariable("optionId") long optionId);
 
     /* 주문 요청시 상품 재고 체크 및 차감 */
-    @PostMapping("/api/internal/products/stocks")
+    @PostMapping("/api/internal/products/decrease-stocks")
     void decreaseStock(@RequestBody List<ProductClientRequest.OptionDetailsForStockUpdate> optionDetailForStockCheckList);
 
-
-
+    /* 주문 취소시 상품 재고 복원 */
+    @PostMapping("/api/internal/products/restore-stocks")
+    void restoreStock(@RequestBody List<ProductClientRequest.OptionDetailsForStockUpdate> requestList);
 }

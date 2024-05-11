@@ -99,13 +99,9 @@ public class OrderService {
             List<Item> items = itemJPARepository.findAllByOrderId(orderId);
             List<ProductClientRequest.OptionDetailsForStockUpdate> requestList = new ArrayList<>();
             items.forEach(item -> requestList.add(new ProductClientRequest.OptionDetailsForStockUpdate(item)));
+            productClient.restoreStock(requestList);
         } else {
             throw new Exception400("not available cancel");
         }
-
-
-    // orderId + status 로 조회 -> 없을시 exception
-        // orderId로 item 리스트 받아오기 -> 받아온 리스트에서 optionId와 quantity만 dto로 리스트뽑기
-        // 클라이언트 호출해서 dto 보내기
     }
 }

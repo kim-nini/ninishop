@@ -49,4 +49,7 @@ public class Option {
         this.stock = remainingStock;
     }
 
+    public void restoreStocks(long unitCount) {
+        this.stock += unitCount;
+    }
 }
