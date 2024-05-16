@@ -12,13 +12,12 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@NoArgsConstructor
 @Entity
 @Table(name="user_tb")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(length = 100, nullable = false, unique = true)
     private String email; // 인증시 필요한 필드
     @Column(length = 256, nullable = false)
@@ -35,7 +34,7 @@ public class User {
     private List<String> roles = new ArrayList<>(); // role은 한 개 이상
 
     @Builder
-    public User(int id, String email, String password, String username, String address, String phoneNumber, List<String> roles) {
+    public User(long id, String email, String password, String username, String address, String phoneNumber, List<String> roles) {
         this.id = id;
         this.email = email;
         this.password = password;

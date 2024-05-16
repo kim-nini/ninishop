@@ -7,10 +7,7 @@ import org.example.userservice.core.security.JwtTokenProvider;
 import org.example.userservice.core.utils.ApiUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,7 +36,7 @@ public class UserRestController {
 
     @PostMapping("/auth-check") // 인증번호 확인
     public String AuthCheck(@RequestBody @Valid UserRequest.EmailCheck emailCheck) {
-        Boolean Checked = mailService.CheckAuthNum(emailCheck.getEmail(), emailCheck.getAuthNum());
+        boolean Checked = mailService.CheckAuthNum(emailCheck.getEmail(), emailCheck.getAuthNum());
         if (Checked) {
             return "ok";
         } else {
@@ -62,10 +59,16 @@ public class UserRestController {
 //        return null;
 //    }
 
+    @GetMapping("/info")
+    public ResponseEntity<?> myInfo(@RequestHeader("userId") String userId) {
+        UserResponse.Mypage userInfo = userService.getUserInfo(userId);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(userInfo);
+        return ResponseEntity.ok(apiResult);
+    }
+
     // (기능4) - 수정
-    @PostMapping("/update-info")
-    public ResponseEntity<?> updateInfo(@RequestBody UserRequest request, Authentication authentication) {
-//        @RequestBody UserRequest request,
+    @PostMapping("/info/update")
+    public ResponseEntity<?> updateInfo(@RequestBody UserRequest request) {
         User user = userService.update(request);
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(user);
         return ResponseEntity.ok(apiResult);

@@ -53,9 +53,6 @@ public class UserService {
                 .orElseThrow(() -> new Exception500("cannot find user : " + request.getUsername()));
     }
 
-    /*********************************************************************************************************************/
-
-
     @Transactional
     public Token login(UserRequest request) { // 로그인
         User user = userJPARepository.findByEmail(aes256.aesCBCEncode(request.getEmail()))
@@ -64,8 +61,6 @@ public class UserService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new Exception401("wrong email or password");
         }
-//        String token = JwtTokenProvider.createAccessToken(user);
-//        return token;
           String jwt = JwtTokenProvider.createRefreshToken();
         return new Token(JwtTokenProvider.createAccessToken(user),JwtTokenProvider.createRefreshToken());
     }
@@ -73,7 +68,6 @@ public class UserService {
     @Transactional
     public User update(UserRequest request) { // 수정
         try {
-
             User user = userJPARepository.findByEmail(aes256.aesCBCEncode(request.getEmail()))
                     .orElseThrow(() -> new Exception500("cannot find user : " + request.getEmail()));
 
@@ -87,5 +81,23 @@ public class UserService {
         return userJPARepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new Exception500("cannot find user : " + request.getUsername()));
     }
+
+    public UserResponse.Mypage getUserInfo(String stringUserId)  {
+        User user = userJPARepository.findById(Long.parseLong(stringUserId)).orElseThrow(() -> new Exception500("cannot find user : " + stringUserId));
+        UserResponse.Mypage mypage = null;
+        try {
+            mypage = UserResponse.Mypage.builder()
+                    .username( aes256.aesCBCDecode(user.getUsername()))
+                    .email(aes256.aesCBCDecode(user.getEmail()))
+                    .phoneNumber(aes256.aesCBCDecode(user.getPhoneNumber()))
+                    .address(aes256.aesCBCDecode(user.getAddress()))
+                    .build();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return mypage;
+    }
+
 
 }

@@ -99,7 +99,9 @@ public class OrderService {
             List<Item> items = itemJPARepository.findAllByOrderId(orderId);
             List<ProductClientRequest.OptionDetailsForStockUpdate> requestList = new ArrayList<>();
             items.forEach(item -> requestList.add(new ProductClientRequest.OptionDetailsForStockUpdate(item)));
-            productClient.restoreStock(requestList);
+            productClient.restoreStock(requestList); // 재고 되돌리기
+            // 주문 상태 변경
+            order.updateStatus(StatusEnum.ORDER_CANCELLED);
         } else {
             throw new Exception400("not available cancel");
         }

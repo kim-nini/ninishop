@@ -16,11 +16,11 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true  # SQL을 보기 좋게 포맷후 출력
+        format_sql: false  # SQL을 보기 좋게 포맷후 출력
   data:
     redis:
       host: localhost
-#      host: redis
+#      host: redis -> 도커컴포즈 사용시
       port: 6379
 logging:
   level:

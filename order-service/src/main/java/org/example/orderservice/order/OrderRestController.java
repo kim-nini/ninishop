@@ -15,7 +15,7 @@ public class OrderRestController {
     private final OrderService orderService;
 
     // 주문 요청
-    @GetMapping("/save")
+    @PostMapping("/save")
     public ResponseEntity<ApiUtils.ApiResult<Object>> saveOrder(@RequestHeader("userId") String userId, @RequestBody List<OrderRequest.OrderRequestDTO> orderRequestDTOList) {
         orderService.saveOrder(userId, orderRequestDTOList);
         return ResponseEntity.ok(ApiUtils.success());

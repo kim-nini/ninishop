@@ -2,6 +2,7 @@ package org.example.userservice.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,17 +35,18 @@ public class UserRequest {
 //    @NotBlank
 //    private String authNum;
 
-    public User toUserEntity(String password, String username, String email, String address, String phoneNumber,  List<String> roles){
-        return User.builder()
-                .username(username)
-                .email(email)
-                .roles(roles)
-                .address(address)
-                .phoneNumber(phoneNumber)
-                .password(password)
-                .build();
-    }
+//    public User toUserEntity(String password, String username, String email, String address, String phoneNumber,  List<String> roles){
+//        return User.builder()
+//                .username(username)
+//                .email(email)
+//                .roles(roles)
+//                .address(address)
+//                .phoneNumber(phoneNumber)
+//                .password(password)
+//                .build();
+//    }
 
+    @Builder
     public UserRequest(String username, String password, String email, String address, String phoneNumber){
         this.username = username;
         this.password = password;

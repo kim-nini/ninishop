@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,30 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    // 인증을 해서 인증된 사용자만 접근할수있게 해주면 매번 확인하거나 매번 인증할 필요가 없음
-
+    // 비밀번호 암호화 빈 설정
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Bean // 세션설정 세션
+    @Bean // 인증 매니저 빈 설정
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
-    // CustomSecurityFilter 밑에 필터체인을 빈으로 등록해서 할수도있찌만 내가 직접만들어서 할 수 도있음
-    // 지금은 사용 안하는 부분
-//    public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
-//        @Override
-//        public void configure(HttpSecurity builder) throws Exception {
-//            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-//            builder.addFilter(new JwtAuthenticationFilter(authenticationManager));
-//            super.configure(builder);
-//        }
-//    }
-
 
     // 컨트롤러전에 민증검사 할지말지 결정하는 filter임
     // http 요청이들어오면
@@ -51,13 +38,13 @@ public class SecurityConfig {
 
         log.debug("[+] WebSecurityConfig Start !!! ");
         //crsf disable : 서버에 인증정보를 저장하지 않기에 csrf를 사용하지 않는다.
-        http.csrf(c -> c.disable());
+        http.csrf(AbstractHttpConfigurer::disable);
         // 스프링에서 제공하는 로그인 폼 사용할지 말지 : 사용안함 disable
-        http.formLogin(f -> f.disable());
+        http.formLogin(AbstractHttpConfigurer::disable);
         //http basic 인증 방식 disable
-        http.httpBasic(hb -> hb.disable());
+        http.httpBasic(AbstractHttpConfigurer::disable);
 
-        http.headers(auth -> auth.disable());
+        http.headers(AbstractHttpConfigurer::disable);
 
         // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 클래스 전에 삽입
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class);
