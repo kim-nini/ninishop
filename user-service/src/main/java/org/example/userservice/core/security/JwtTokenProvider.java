@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.example.userservice.user.StringArrayConverter;
 import org.example.userservice.user.User;
 import org.springframework.stereotype.Component;
 
@@ -21,13 +20,10 @@ public class JwtTokenProvider {
     private static final String SECRET = "MySecretKey";
 
     public static String createAccessToken(User user) {
-        StringArrayConverter sac = new StringArrayConverter();
-        String roles = sac.convertToDatabaseColumn(user.getRoles());
         String jwt = JWT.create()
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
                 .withClaim("id", user.getId())
-                .withClaim("role", roles)
                 .sign(Algorithm.HMAC512(SECRET));
 
         return TOKEN_PREFIX + jwt;

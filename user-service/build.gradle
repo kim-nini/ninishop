@@ -28,14 +28,12 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop' // srping aop
     implementation 'org.springframework.boot:spring-boot-starter-web' // 웹 어플리케이션 구현
-    implementation 'org.springframework.boot:spring-boot-starter-security' // 보안 기능 구현
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"  // JPA를 이용한 데이터 접근
     implementation 'org.springframework.boot:spring-boot-starter-validation' // 검증 기능
     runtimeOnly 'com.mysql:mysql-connector-j'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
 
     // 서드파티 라이브러리
     // https://mvnrepository.com/artifact/commons-codec/commons-codec Hex Encode,Decode

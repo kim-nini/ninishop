@@ -8,7 +8,6 @@ import org.example.userservice.core.security.AES256;
 import org.example.userservice.core.security.JwtTokenProvider;
 import org.example.userservice.redis.RedisService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +20,6 @@ import java.util.List;
 public class UserService {
 
     private final UserJPARepository userJPARepository;
-    private final PasswordEncoder passwordEncoder;
     private final AES256 aes256; // 암호화클래스
     private static final String AUTH_CODE_PREFIX = "AuthCode ";
     private final MailService mailService;
@@ -31,23 +29,15 @@ public class UserService {
 
     @Transactional
     public User join(UserRequest request) { // 회원가입
-        try {
-            List<String> roles = new ArrayList<>();
-            roles.add("ROLE_USER");
-            // 암호화
-            User user = User.builder()
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .username(request.getUsername())
-                    .email(aes256.aesCBCEncode(request.getEmail()))
-                    .address(aes256.aesCBCEncode(request.getAddress()))
-                    .phoneNumber(aes256.aesCBCEncode(request.getPhoneNumber()))
-                    .roles(roles)
-                    .build();
+        User user = User.builder()
+                .password(aes256.aesCBCEncode(request.getPassword()))
+                .username(request.getUsername())
+                .email(aes256.aesCBCEncode(request.getEmail()))
+                .address(aes256.aesCBCEncode(request.getAddress()))
+                .phoneNumber(aes256.aesCBCEncode(request.getPhoneNumber()))
+                .build();
 
-            userJPARepository.save(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        userJPARepository.save(user);
 
         return userJPARepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new Exception500("cannot find user : " + request.getUsername()));
@@ -58,46 +48,47 @@ public class UserService {
         User user = userJPARepository.findByEmail(aes256.aesCBCEncode(request.getEmail()))
                 .orElseThrow(() -> new Exception500("cannot find email : " + request.getEmail()));
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!aes256.matches(request.getPassword(), user.getPassword())) {
             throw new Exception401("wrong email or password");
         }
-          String jwt = JwtTokenProvider.createRefreshToken();
-        return new Token(JwtTokenProvider.createAccessToken(user),JwtTokenProvider.createRefreshToken());
+        String jwt = JwtTokenProvider.createRefreshToken();
+        return new Token(JwtTokenProvider.createAccessToken(user), JwtTokenProvider.createRefreshToken());
     }
 
     @Transactional
     public User update(UserRequest request) { // 수정
-        try {
-            User user = userJPARepository.findByEmail(aes256.aesCBCEncode(request.getEmail()))
-                    .orElseThrow(() -> new Exception500("cannot find user : " + request.getEmail()));
+        User user = userJPARepository.findByEmail(aes256.aesCBCEncode(request.getEmail()))
+                .orElseThrow(() -> new Exception500("cannot find user : " + request.getEmail()));
 
-            String password = passwordEncoder.encode(request.getPassword());
-            user.updateInfo(password, aes256.aesCBCEncode(request.getAddress()), aes256.aesCBCEncode(request.getPhoneNumber()));
+        String password = aes256.aesCBCEncode(request.getPassword());
+        user.updateInfo(password, aes256.aesCBCEncode(request.getAddress()), aes256.aesCBCEncode(request.getPhoneNumber()));
+        userJPARepository.save(user);
 
-            userJPARepository.save(user);
-        } catch (Exception e) {
-            throw new Exception500("failed to update");
-        }
         return userJPARepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new Exception500("cannot find user : " + request.getUsername()));
     }
 
-    public UserResponse.Mypage getUserInfo(String stringUserId)  {
+    public UserResponse.Mypage getUserInfo(String stringUserId) {
         User user = userJPARepository.findById(Long.parseLong(stringUserId)).orElseThrow(() -> new Exception500("cannot find user : " + stringUserId));
-        UserResponse.Mypage mypage = null;
-        try {
-            mypage = UserResponse.Mypage.builder()
-                    .username( aes256.aesCBCDecode(user.getUsername()))
-                    .email(aes256.aesCBCDecode(user.getEmail()))
-                    .phoneNumber(aes256.aesCBCDecode(user.getPhoneNumber()))
-                    .address(aes256.aesCBCDecode(user.getAddress()))
-                    .build();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
 
-        return mypage;
+        return UserResponse.Mypage.builder()
+                .username(aes256.aesCBCDecode(user.getUsername()))
+                .email(aes256.aesCBCDecode(user.getEmail()))
+                .phoneNumber(aes256.aesCBCDecode(user.getPhoneNumber()))
+                .address(aes256.aesCBCDecode(user.getAddress()))
+                .build();
     }
+
+//    public User toUserEntity(String password, String username, String email, String address, String phoneNumber,  List<String> roles){
+////        return User.builder()
+////                .username(username)
+////                .email(email)
+////                .roles(roles)
+////                .address(address)
+////                .phoneNumber(phoneNumber)
+////                .password(password)
+////                .build();
+////    }
 
 
 }

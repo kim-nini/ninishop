@@ -5,10 +5,9 @@ plugins {
 }
 
 group = 'com.jy_dev'
-//version = '0.0.1-SNAPSHOT'
 
 subprojects {
-    version = '0.0.1'
+    version = '0.0.1-SNAPSHOT'
     sourceCompatibility = '21'
 
     apply plugin: 'java'

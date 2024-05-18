@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class AES256 {
@@ -15,37 +16,45 @@ public class AES256 {
 
     private SecretKeySpec secretKey;
 
-
     public String aesCBCEncode(String plainText) {
         try {
-            secretKey = new SecretKeySpec(privateKey_256.getBytes("UTF-8"), "AES");
-            IvParameterSpec IV = new IvParameterSpec(privateKey_256.substring(0, 16).getBytes());
+            secretKey = new SecretKeySpec(privateKey_256.getBytes(StandardCharsets.UTF_8), "AES");
+            IvParameterSpec IV = new IvParameterSpec(privateKey_256.substring(0, 16).getBytes(StandardCharsets.UTF_8));
 
             Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
-
             c.init(Cipher.ENCRYPT_MODE, secretKey, IV);
 
-            byte[] encrpytionByte = c.doFinal(plainText.getBytes("UTF-8"));
+            byte[] encryptionByte = c.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
 
-            return Hex.encodeHexString(encrpytionByte);
+            return Hex.encodeHexString(encryptionByte);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public String aesCBCDecode(String encodeText) throws Exception {
-        secretKey = new SecretKeySpec(privateKey_256.getBytes("UTF-8"), "AES");
-        IvParameterSpec IV = new IvParameterSpec(privateKey_256.substring(0, 16).getBytes());
+    public String aesCBCDecode(String encodeText) {
+        try {
+            secretKey = new SecretKeySpec(privateKey_256.getBytes(StandardCharsets.UTF_8), "AES");
+            IvParameterSpec IV = new IvParameterSpec(privateKey_256.substring(0, 16).getBytes(StandardCharsets.UTF_8));
 
-        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            c.init(Cipher.DECRYPT_MODE, secretKey, IV);
 
-        c.init(Cipher.DECRYPT_MODE, secretKey, IV);
+            byte[] decodeByte = Hex.decodeHex(encodeText.toCharArray());
 
-        byte[] decodeByte = Hex.decodeHex(encodeText.toCharArray());
-
-        return new String(c.doFinal(decodeByte), "UTF-8");
+            return new String(c.doFinal(decodeByte), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-
+    public boolean matches(String plainText, String encodedText) {
+        try {
+            String encodedPlainText = aesCBCEncode(plainText);
+            return encodedPlainText.equals(encodedText);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

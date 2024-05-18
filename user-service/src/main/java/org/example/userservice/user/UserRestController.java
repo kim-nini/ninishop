@@ -4,9 +4,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.userservice.core.errors.exception.Exception400;
 import org.example.userservice.core.security.JwtTokenProvider;
+import org.example.userservice.core.security.UserDetails;
+import org.example.userservice.core.security.UserInfo;
 import org.example.userservice.core.utils.ApiUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -50,7 +51,6 @@ public class UserRestController {
     public ResponseEntity<?> login(@RequestBody UserRequest request) {
         Token jwt = userService.login(request);
         return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt.getAccessToken()).body(ApiUtils.success(null));
-//        return ResponseEntity.ok().body(ApiUtils.success(jwt));
     }
 
     // (기능3) - 로그아웃
@@ -59,9 +59,10 @@ public class UserRestController {
 //        return null;
 //    }
 
+    // 마이페이지
     @GetMapping("/info")
-    public ResponseEntity<?> myInfo(@RequestHeader("userId") String userId) {
-        UserResponse.Mypage userInfo = userService.getUserInfo(userId);
+    public ResponseEntity<?> myInfo(@UserInfo UserDetails userDetails) {
+        UserResponse.Mypage userInfo = userService.getUserInfo(userDetails.getUserId());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(userInfo);
         return ResponseEntity.ok(apiResult);
     }
