@@ -1,5 +1,5 @@
 ## 🖥️프로젝트 소개
-Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 이커머스 플랫폼입니다. <br>
+Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 **이커머스 플랫폼**입니다. <br>
 각 서비스가 독립적으로 배포 및 확장 가능하여, 유연하고 효율적인 운영이 가능합니다.
 
 ## ✨주요기능
@@ -67,5 +67,4 @@ Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 이커�
 
 
 ## 💡성능 최적화 및 트러블슈팅
-추가 예정 
-
+[OpenFeign 타입오류](https://velog.io/@duddjektjtro/ninishop-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-OpenFeign-%ED%83%80%EC%9E%85%EC%98%A4%EB%A5%98)
