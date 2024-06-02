@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Transactional(readOnly = true)
 @RequiredArgsConstructor // final일 경우 dto를 받아와 final의 기본생성자를 대체하고 jpa가 매핑할 수 있게 해줌
 @Service
@@ -28,7 +25,7 @@ public class UserService {
     private long authCodeExpirationMillis;
 
     @Transactional
-    public User join(UserRequest request) { // 회원가입
+    public void join(UserRequest request) { // 회원가입
         User user = User.builder()
                 .password(aes256.aesCBCEncode(request.getPassword()))
                 .username(request.getUsername())
@@ -38,9 +35,6 @@ public class UserService {
                 .build();
 
         userJPARepository.save(user);
-
-        return userJPARepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new Exception500("cannot find user : " + request.getUsername()));
     }
 
     @Transactional
@@ -51,28 +45,33 @@ public class UserService {
         if (!aes256.matches(request.getPassword(), user.getPassword())) {
             throw new Exception401("wrong email or password");
         }
-        String jwt = JwtTokenProvider.createRefreshToken();
+//        String jwt = JwtTokenProvider.createRefreshToken();
         return new Token(JwtTokenProvider.createAccessToken(user), JwtTokenProvider.createRefreshToken());
     }
 
     @Transactional
-    public User update(UserRequest request) { // 수정
+    public UserResponse.MyPage update(UserRequest request) { // 수정
         User user = userJPARepository.findByEmail(aes256.aesCBCEncode(request.getEmail()))
                 .orElseThrow(() -> new Exception500("cannot find user : " + request.getEmail()));
 
-        String password = aes256.aesCBCEncode(request.getPassword());
-        user.updateInfo(password, aes256.aesCBCEncode(request.getAddress()), aes256.aesCBCEncode(request.getPhoneNumber()));
+        user.updateInfo(aes256.aesCBCEncode(request.getPassword()), aes256.aesCBCEncode(request.getAddress()), aes256.aesCBCEncode(request.getPhoneNumber()));
         userJPARepository.save(user);
 
-        return userJPARepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new Exception500("cannot find user : " + request.getUsername()));
+        return UserResponse.MyPage.builder()
+                .username(user.getUsername())
+                .password(aes256.aesCBCDecode(user.getPassword()))
+                .email(aes256.aesCBCDecode(user.getEmail()))
+                .phoneNumber(aes256.aesCBCDecode(user.getPhoneNumber()))
+                .address(aes256.aesCBCDecode(user.getAddress()))
+                .build();
     }
 
-    public UserResponse.Mypage getUserInfo(String stringUserId) {
+    public UserResponse.MyPage getUserInfo(String stringUserId) { // 마이페이지
         User user = userJPARepository.findById(Long.parseLong(stringUserId)).orElseThrow(() -> new Exception500("cannot find user : " + stringUserId));
 
-        return UserResponse.Mypage.builder()
-                .username(aes256.aesCBCDecode(user.getUsername()))
+        return UserResponse.MyPage.builder()
+                .username(user.getUsername())
+                .password(aes256.aesCBCDecode(user.getPassword()))
                 .email(aes256.aesCBCDecode(user.getEmail()))
                 .phoneNumber(aes256.aesCBCDecode(user.getPhoneNumber()))
                 .address(aes256.aesCBCDecode(user.getAddress()))

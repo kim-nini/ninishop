@@ -42,13 +42,13 @@ public class MailService {
         }
 
         makeRandomNumber();
-        String setFrom = "skrskr9403@naver.com"; // email-config에 설정한 자신의 이메일 주소를 입력
+        String setFrom = "skrskr9403@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력
         String toMail = email;
         String title = "회원 가입 인증 이메일 입니다."; // 이메일 제목
         String content =
                 "nini shop을 방문해주셔서 감사합니다." +    //html 형식으로 작성 !
                         "<br><br>" +
-                        "인증 번호는 " + authNumber + "입니다." +
+                        "인증 번호는 " + authNumber + " 입니다." +
                         "<br>" +
                         "인증번호를 정확히 입력해주세요"; //이메일 내용 삽입
         mailSend(setFrom, toMail, title, content);
@@ -78,12 +78,7 @@ public class MailService {
             if(redisService.getData(authNum)==null){
                 return false;
             }
-            else if(redisService.getData(authNum).equals(email)){
-                return true;
-            }
-            else{
-                return false;
-            }
+            else return redisService.getData(authNum).equals(email);
     }
 
 

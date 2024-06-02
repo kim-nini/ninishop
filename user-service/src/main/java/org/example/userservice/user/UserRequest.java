@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -32,20 +30,6 @@ public class UserRequest {
     @NotBlank
     private String phoneNumber;
 
-//    @NotBlank
-//    private String authNum;
-
-//    public User toUserEntity(String password, String username, String email, String address, String phoneNumber,  List<String> roles){
-//        return User.builder()
-//                .username(username)
-//                .email(email)
-//                .roles(roles)
-//                .address(address)
-//                .phoneNumber(phoneNumber)
-//                .password(password)
-//                .build();
-//    }
-
     @Builder
     public UserRequest(String username, String password, String email, String address, String phoneNumber){
         this.username = username;
@@ -61,4 +45,21 @@ public class UserRequest {
         private String authNum;
     }
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class MyPage {
+        private String email;
+        private String username;
+        private String address;
+        private String phoneNumber;
+
+        @Builder
+        public MyPage(String email, String username, String address, String phoneNumber) {
+            this.email = email;
+            this.username = username;
+            this.address = address;
+            this.phoneNumber = phoneNumber;
+        }
+    }
 }

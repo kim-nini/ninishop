@@ -18,16 +18,8 @@ public class UserRestController {
     private final UserService userService;
     private final MailService mailService;
 
-    // (기능1) 회원가입
-    @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody @Valid UserRequest request) {
-        User user = userService.join(request);
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(user);
-        return ResponseEntity.ok(apiResult);
-    }
-
     // 이메일인증 먼저한 후에 회원가입
-    // (기능1-1) 이메일인증
+    // 이메일인증
     @PostMapping("/send-mail")
     public String mailSend(@RequestBody @Valid UserRequest.EmailCheck emailCheck) {
         System.out.println("이메일 인증 요청이 들어옴");
@@ -45,8 +37,15 @@ public class UserRestController {
         }
     }
 
+    // 회원가입
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody @Valid UserRequest request) {
+        userService.join(request);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
+        return ResponseEntity.ok(apiResult);
+    }
 
-    // (기능2) 로그인
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserRequest request) {
         Token jwt = userService.login(request);
@@ -62,16 +61,16 @@ public class UserRestController {
     // 마이페이지
     @GetMapping("/info")
     public ResponseEntity<?> myInfo(@UserInfo UserDetails userDetails) {
-        UserResponse.Mypage userInfo = userService.getUserInfo(userDetails.getUserId());
+        UserResponse.MyPage userInfo = userService.getUserInfo(userDetails.getUserId());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(userInfo);
         return ResponseEntity.ok(apiResult);
     }
 
-    // (기능4) - 수정
+    // 정보 수정
     @PostMapping("/info/update")
     public ResponseEntity<?> updateInfo(@RequestBody UserRequest request) {
-        User user = userService.update(request);
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(user);
+        UserResponse.MyPage updateCompletedInfo = userService.update(request);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(updateCompletedInfo);
         return ResponseEntity.ok(apiResult);
     }
 

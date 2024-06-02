@@ -1,4 +1,4 @@
-package org.example.userservice.core.errors;
+package com.jy_dev.common.errors;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

@@ -1,6 +1,6 @@
-package org.example.userservice.core.errors;
+package com.jy_dev.common.errors;
 
-import org.example.userservice.core.errors.exception.*;
+import com.jy_dev.common.errors.exception.*;
 import org.example.userservice.core.utils.ApiUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

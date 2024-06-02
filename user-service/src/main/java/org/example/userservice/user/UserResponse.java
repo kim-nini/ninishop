@@ -10,16 +10,18 @@ public class UserResponse {
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class Mypage {
+    public static class MyPage {
         private String email;
         private String username;
+        private String password;
         private String address;
         private String phoneNumber;
 
         @Builder
-        public Mypage(String email, String username, String address, String phoneNumber) {
+        public MyPage(String email, String username, String password, String address, String phoneNumber) {
             this.email = email;
             this.username = username;
+            this.password = password;
             this.address = address;
             this.phoneNumber = phoneNumber;
         }
