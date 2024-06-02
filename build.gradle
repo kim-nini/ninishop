@@ -50,6 +50,7 @@ project(':order-service'){
     }
 }
 
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor

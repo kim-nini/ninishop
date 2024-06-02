@@ -56,8 +56,8 @@ public class OrderService {
         itemJPARepository.saveAll(items);
 
         // 장바구니 삭제 -> 옵션 아이디 별로 삭제 하기
-        orderRequestDTOList.forEach(data ->
-                cartJPARepository.deleteByOptionIdAndUserId(userId, data.getOptionId()));
+//        orderRequestDTOList.forEach(data ->
+//                cartJPARepository.deleteByOptionIdAndUserId(userId, data.getOptionId()));
     }
 
     // 주문내역 상세조회
