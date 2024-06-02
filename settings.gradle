@@ -1,1 +1,8 @@
 rootProject.name = 'ninishop'
+include 'product-service'
+include 'user-service'
+include 'order-service'
+include 'discovery'
+include 'api-gateway'
+include 'scheduler-service'
+

@@ -1,0 +1,43 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+  port: 8011
+spring:
+  application:
+    name: product-service
+  config:
+    import:
+      secret.yml
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: false  # SQL을 보기 좋게 포맷후 출력
+  data:
+    redis:
+      host: localhost
+#      host: redis -> 도커컴포즈 사용시
+      port: 6379
+logging:
+  level:
+#    '[com.jy_dev.ninishop]': DEBUG
+    '[org.hibernate.type]': TRACE
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
