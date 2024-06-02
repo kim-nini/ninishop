@@ -46,7 +46,7 @@ Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 이커�
 3. 모든 서비스가 정상적으로 시작되면, cURL 또는 Postman을 사용하여 API를 테스트할 수 있습니다.
   
 ## 📜API 명세서
- 추가예정
+ [ninishop api 명세서](https://documenter.getpostman.com/view/34469315/2sA3QwcAMo)
 
 ## 📐아키텍처
 ![아키텍처-001 (1)](https://github.com/kim-nini/ninishop/assets/144877020/35075726-eecc-404f-be1f-f211d6270e24)
@@ -61,6 +61,10 @@ Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 이커�
 3. MySQL: 주요 데이터 저장을 위한 데이터베이스
 4. Redis: 인메모리 기반 데이터 스토리지, redisson
 5. Docker: 개별 컨테이너로 분리하여 간편한 설치 및 일관된 실행 환경 제공
+
+## ✏️ERD
+![image](https://github.com/kim-nini/ninishop/assets/144877020/a77cacbf-0567-4bd9-9897-8930ae304b9b)
+
 
 ## 💡성능 최적화 및 트러블슈팅
 추가 예정 
