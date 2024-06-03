@@ -46,7 +46,7 @@ Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 **이커
 3. 모든 서비스가 정상적으로 시작되면, cURL 또는 Postman을 사용하여 API를 테스트할 수 있습니다.
   
 ## 📜API 명세서
- [ninishop api 명세서](https://documenter.getpostman.com/view/34469315/2sA3QwcAMo)
+ 👉🏻 [ninishop API 명세서 바로가기](https://documenter.getpostman.com/view/34469315/2sA3QwcAMo "ninishop API 명세서")
 
 ## 📐아키텍처
 ![아키텍처-001 (1)](https://github.com/kim-nini/ninishop/assets/144877020/35075726-eecc-404f-be1f-f211d6270e24)
@@ -67,4 +67,7 @@ Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 **이커
 
 
 ## 💡성능 최적화 및 트러블슈팅
+### 성능 최적화
+[Redisson 분산락을 통한 동시성 성능 최적화](https://velog.io/@duddjektjtro/ninishop-성능-최적화-Redisson-분산락을-통한-동시성-성능-최적화)
+### 트러블 슈팅
 [OpenFeign 타입오류](https://velog.io/@duddjektjtro/ninishop-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-OpenFeign-%ED%83%80%EC%9E%85%EC%98%A4%EB%A5%98)
