@@ -68,6 +68,7 @@ Ninishop은 마이크로서비스 아키텍처(MSA)를 기반으로 한 **이커
 
 ## 💡성능 최적화 및 트러블슈팅
 ### 성능 최적화
-[Redisson 분산락을 통한 동시성 성능 최적화](https://velog.io/@duddjektjtro/ninishop-성능-최적화-Redisson-분산락을-통한-동시성-성능-최적화)
+- [Redisson 분산락을 통한 동시성 성능 최적화](https://velog.io/@duddjektjtro/ninishop-성능-최적화-Redisson-분산락을-통한-동시성-성능-최적화)
 ### 트러블 슈팅
-[OpenFeign 타입오류](https://velog.io/@duddjektjtro/ninishop-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-OpenFeign-%ED%83%80%EC%9E%85%EC%98%A4%EB%A5%98)
+- [OpenFeign 타입오류](https://velog.io/@duddjektjtro/ninishop-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-OpenFeign-%ED%83%80%EC%9E%85%EC%98%A4%EB%A5%98)
+- [오버셀링 - 분산락 해제 시점과 트랜잭션 커밋 시점의 불일치](https://velog.io/@duddjektjtro/ninishop-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85-Redisson-%EB%B6%84%EC%82%B0%EB%9D%BD%EA%B3%BC-%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EC%BB%A4%EB%B0%8B-%EC%8B%9C%EC%A0%90%EC%9D%98-%EB%B6%88%EC%9D%BC%EC%B9%98-9od98cnl)
